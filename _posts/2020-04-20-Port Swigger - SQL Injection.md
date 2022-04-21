@@ -32,6 +32,7 @@ It can let you do:
   -create views in a database
   
   -set permissions on tables, procedures, and views
+  
 
 Since SQL is a simple programming language and very powerful at the same time, attackers are able to inject arbitrary code and exploit your databases. 
 
