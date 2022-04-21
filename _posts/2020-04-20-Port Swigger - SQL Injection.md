@@ -12,15 +12,25 @@ Nearly every applications rely on database to process all the data. And those da
 So, in order to keep those data in shape, databases use SQL, which stands for Structured Query Language. SQL lets you access and manipulate databases. 
 
 It can let you do: 
+
   -execute queries against a database
+  
   -retrieve data from a database
+  
   -insert records in a database
+  
   -update records in a database
+  
   -delete records from a database
+  
   -create new databases
+  
   -create new tables in a database
+  
   -create stored procedures in a database
+  
   -create views in a database
+  
   -set permissions on tables, procedures, and views
 
 Since SQL is a simple programming language and very powerful at the same time, attackers are able to inject arbitrary code and exploit your databases. 
