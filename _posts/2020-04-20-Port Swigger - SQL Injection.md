@@ -68,5 +68,3 @@ this relies on the database pausing for a specified amount of time, then returns
 This exploits vulnerability that consists of triggering an out-of-band network connection to a system that you control. 
 This technique is used when all the other tecnhiques don't work. And this technique is not very common, wince it relies on certain features being enabled in the database for it to actually make the network connection.
 You could use a variety of protocols for this technique, but the most commonly used ones are DNS and HTTP. 
-
-## 2. 
