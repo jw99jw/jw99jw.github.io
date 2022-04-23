@@ -39,9 +39,9 @@ To carry out SQL injection UNION attack, we need to figure out the number of col
 
 One of the methods used to determine the number of columns is using the ORDER BY keyword.
 
-## We use ORDER BY keyword to order the results the way we want. 
+## Using ORDER BY keyword to order the results the way we want
 
-And if we submit SELECT a FROM table1 WHERE [condition] ORDER BY 1,
+If we submit SELECT a FROM table1 WHERE [condition] ORDER BY 1,
 
 we will get the results ordered by the first column in a descending order.(If DESC or ASC is omitted, the database will automatically order in descending order.)\
 
@@ -49,9 +49,9 @@ For example, if the first column is text type data, then the results are ordered
 
 But if the table has only 3 columns but we submit ' ORDER BY 4, then the database will return an error message, since it can't order by a column that it doesn't have.
 
-This is what the attackers exploit.
+This is what the attackers seek to exploit.
 
-## Another way to determine the number of columns is by using UNION keyword.
+## Using the UNION keyword.
 
 According to the requirements of UNION keyword stated above, we need to SELECT the exact number of columns as the first table.
 
