@@ -91,13 +91,13 @@ Now we can tell that there's an SQL injection in the categories filter.
 
 Let's click on any category. We can guess that there's at least two columns: Name of the product, and the price categories.
 
-https://user-images.githubusercontent.com/69608504/164915708-be95579e-c142-43f7-bcba-036717033630.png
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164916399-8d198eb0-7a9f-42d6-9d02-933c6a54fe52.png"/>
 
 So let's check by entering:
 
 ' ORDER BY 1--
 
-https://user-images.githubusercontent.com/69608504/164915769-a7c5abb2-75ec-4e0e-963b-dd88b68e9914.png
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164916434-30a33e3f-3be7-4873-ab24-a1717d86527f.png"/>
 
 It doesn't seem that the results are ordered in alphabetical order. So we can assume that there's another column other than the product name.
 
@@ -145,4 +145,5 @@ Let's see what happens if we add two nulls behind the query,
 
 <img width="70%" src="https://user-images.githubusercontent.com/69608504/164916213-e48687a3-922d-432f-a0df-0625ce63d93e.png"/>
 
-Looks like we just solved the lab successfully!
+
+Solved the lab successfully!
