@@ -76,8 +76,7 @@ If the application doesn't return an error message, you know the number of colum
 
 Now let's take a look at the lab.
 
-https://user-images.githubusercontent.com/69608504/164915471-b98555ef-2888-4a15-885f-8d5bdd1265eb.png
-
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164916357-2f7df3c7-dbe7-4bbb-abf1-7dae07f3025c.png"/>
 According to the description, there is an SQL injection vulnerability in the categories filter.
 
 Let's verify this ty entering ' character.
