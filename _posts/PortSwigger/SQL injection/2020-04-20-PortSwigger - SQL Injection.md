@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 
+title: What is SQL Injection?
 categories: [SQL Injection]
 tags: [SQL Injection]
 ---
