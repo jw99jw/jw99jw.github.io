@@ -1,7 +1,7 @@
 ---
 layout: post
 title: What is SQL Injection?
-categories: [SQL Injection]
+categories: [PortSwigger/SQL Injection]
 tags: [SQL Injection]
 ---
 
