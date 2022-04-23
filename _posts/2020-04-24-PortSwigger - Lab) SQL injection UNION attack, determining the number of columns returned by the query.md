@@ -1,0 +1,149 @@
+---
+layout: post
+title: Lab) SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+categories: [SQL Injection]
+tags: [SQL Injection]
+---
+
+# Lab: SQL injection UNION attack, determining the number of columns returned by the query
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164913723-b4fab895-5eba-4470-919a-d2f9228ecdb7.png"/>
+
+This is the first lab of the practitioner level of the SQL injection labs.
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164914545-e51bc15e-b118-46a0-ae56-e2b92cfbec70.png"/>
+
+## Goal: perform an SQL injection UNION attack that returns an additional row containing row values.
+
+Before solving this lab, you first need to know what UNION keyword does.
+
+We will use SQL query to display informations that we need, using SELECT queries like this.
+
+### SELECT a, b FROM table1 WHERE [conditions]
+
+In this query, we are asking the database for a specific value satisfying the conditions in column a and b contained in the table 1.
+
+But whith this query, we can only ask for data in one table. 
+
+Using the UNION keyword, we can execute additional SELECT queries and append the results to the origianl query like:
+
+### SELECT a, b FROM table1 UNION SELECT c, d FROM table2
+
+The SQL query will return a single result set with two columns, containing values from column a and b, in table1 plus column c and d from table2.
+
+UNION query is very useful, but there are two key requirements to be met:
+1. The individual queries must return the same number of columns.
+2. The data types of each column must be compatible between the individual queries.
+
+To carry out SQL injection UNION attack, we need to figure out the number of columns the database that we need.
+
+One of the methods used to determine the number of columns is using the ORDER BY keyword.
+
+## We use ORDER BY keyword to order the results the way we want. 
+
+And if we submit SELECT a FROM table1 WHERE [condition] ORDER BY 1,
+
+we will get the results ordered by the first column in a descending order.(If DESC or ASC is omitted, the database will automatically order in descending order.)\
+
+For example, if the first column is text type data, then the results are ordered in alphabetical order.
+
+But if the table has only 3 columns but we submit ' ORDER BY 4, then the database will return an error message, since it can't order by a column that it doesn't have.
+
+This is what the attackers exploit.
+
+## Another way to determine the number of columns is by using UNION keyword.
+
+According to the requirements of UNION keyword stated above, we need to SELECT the exact number of columns as the first table.
+
+And the data type must be compatible.
+
+The number type can be translated as text type, but the opposite isn't possible. 
+
+There is a data type called NULL, which is used to represent a missing value. And it is compatible with any data types.
+
+Therefore, we can use NULL to determine the number of columns by repetitively submitting following queries:
+
+SELECT a FROM table1 WHERE [condition] UNION SELECT NULL
+
+if this query returns an error, just add another NULL at the back of the query.
+
+SELECT a FROM table1 WHERE [condition] UNION SELECT NULL, NULL
+
+Keep on going until the number of NULL is same as the number of columns of table1. 
+
+If the application doesn't return an error message, you know the number of columns of the table.
+
+
+Now let's take a look at the lab.
+
+https://user-images.githubusercontent.com/69608504/164915471-b98555ef-2888-4a15-885f-8d5bdd1265eb.png
+
+According to the description, there is an SQL injection vulnerability in the categories filter.
+
+Let's verify this ty entering ' character.
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164915599-28f809cd-42f8-4369-8b24-47f909abff7c.png"/>
+
+This returns an error message.
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164915625-3f4b287c-0492-4997-a86c-be1e5d63806b.png"/>
+
+Now we can tell that there's an SQL injection in the categories filter. 
+
+Let's click on any category. We can guess that there's at least two columns: Name of the product, and the price categories.
+
+https://user-images.githubusercontent.com/69608504/164915708-be95579e-c142-43f7-bcba-036717033630.png
+
+So let's check by entering:
+
+' ORDER BY 1--
+
+https://user-images.githubusercontent.com/69608504/164915769-a7c5abb2-75ec-4e0e-963b-dd88b68e9914.png
+
+It doesn't seem that the results are ordered in alphabetical order. So we can assume that there's another column other than the product name.
+
+If we enter ' ORDER BY 2--, 
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164915830-a1c2c412-e6a2-493f-9d64-193c291f4586.png"/>
+
+We can see that the results are ordered in alphabetical order. So we can conclude that the second column is probably the product name.
+
+And ifi we submit ' ORDER BY 3--, 
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164915877-a424b300-0589-416f-9a33-478dc2eb373e.png"/>
+
+The results are ordered by price. So the third column seems to be the order.
+
+If we change the query from 3 to 4, the error is returned:
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164915941-94011697-96d4-4f38-8af8-6809550fad4f.png"/>
+
+This is because the database can't order by what the database doesn't have.
+
+So we can conclude that there are three columns in the table.
+
+To reach the goal, let's use the UNION keyword.
+
+As mentioned above, to use UNION keyword, the two requirements should be met. 
+
+And the first requirement is met, by figuring out the number of columns above.
+
+The second requirement doesn't bother us, because we can use NULL keyword instead.
+
+But to make sure, let's increase the number of NULLs from one.
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164916084-f5cc79fb-f1b0-4659-b753-a596b7857653.png"/>
+
+Of course, it returns the error message.
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164916108-912de952-10ad-4db0-bf8a-eefd15fdd9f9.png"/>
+
+Let's see what happens if we add two nulls behind the query, 
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164916171-358c9ab9-6b67-47d9-99c8-625c6597659d.png"/>
+
+
+
+<img width="70%" src="https://user-images.githubusercontent.com/69608504/164916213-e48687a3-922d-432f-a0df-0625ce63d93e.png"/>
+
+Looks like we just solved the lab successfully!
