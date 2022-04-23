@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lab) SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+title: Lab) SQL injection UNION attack, determining the number of columns returned by the query
 categories: [SQL Injection]
 tags: [SQL Injection]
 ---
